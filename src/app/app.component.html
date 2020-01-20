@@ -1,0 +1,30 @@
+<div class="row po-sm-12" style="margin-top: 20px;">
+  <div class="po-font-title po-m-1">Usuarios Datasul</div>
+</div>
+<form [formGroup]="searchForm">
+  <div class="row po-sm-12">
+    <po-button p-label="Adicionar" class="po-sm-3 po-md-3 po-lg-2 po-xl-1 primary" style="margin-top:20px;"></po-button>
+    <po-input p-icon='po-icon po-icon-search' style="margin-top:12px;" formControlName="codigoFiltro" name="vl_initial" p-placeholder="Nome Inicial" class="po-md-7 po-lg-4 po-offset-lg-5 po-offset-xl-6" (keyup.enter)="onSubmit(searchForm.value)"></po-input>
+    <div class="po-page-list-filter-search ng-star-inserted" style="margin-top:13px;"><span (click)='showModal(0,1)' class="po-page-list-filter-search-link" tabindex="0">Busca Avançada</span></div>
+  </div>
+</form>
+<div class="po-row">
+  <po-container p-no-shadow=true *ngIf="verifyFilters()" style="margin-top: 10px;margin-bottom: 5px;" class="po-md-12">
+    <po-tag *ngFor="let filter of filters" p-value='{{filter.label}}' style="margin-right: 10px;"></po-tag>
+  </po-container>
+</div>
+<div class="po-row">
+    <po-table [p-hide-detail]=false [p-actions]=actions [p-columns]=columns [p-items]="usuarShow" [p-sort]="true" [p-loading]=loading [p-striped]=true [p-checkbox]=true  [p-show-more-disabled]=false class="po-md-12" style="margin-top:10px;"></po-table>
+</div>
+
+<po-modal #buscaAvancada [p-title]="titleModal" [p-primary-action]="primaryBtnModal()">
+  <po-divider p-label="Ativo"></po-divider>
+  <po-radio-group *ngIf="type === 1" name="rBoxActive" p-label="Situação" [p-options]="optionsRadioActive" [(ngModel)]="radioActive" p-columns=3></po-radio-group>
+  <!--<po-info *ngIf="type === 2 ? true : false" p-label="Usuário" [p-value]="lastUsuar.userName"></po-info>
+  <po-info *ngIf="type === 2 ? true : false" p-label="Usuário" [p-value]=""></po-info>
+  <po-input *ngIf="type === 2" [(ngModel)]="lastUsuar.displayName" p-placeholder="Nome" p-label="Nome do Usuário"></po-input>
+  <po-input *ngIf="type === 2" [(ngModel)]="" p-placeholder="Nome" p-label="Nome do Usuário"></po-input>-->
+  <po-select *ngIf="type === 2" name="select" p-label="Tipo" [p-options]="usuarTypeSelect"></po-select>
+</po-modal>
+
+<po-loading-overlay *ngIf="loadingScreen" p-screen-lock="true" p-text="Carregando..."></po-loading-overlay>
